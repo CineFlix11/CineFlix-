@@ -3,52 +3,105 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CineFlix</title>
+<meta name="theme-color" content="#09070f">
+<title>CineFlix — Filmes e Séries</title>
 <style>
+:root{--bg:#09070f;--panel:#15111f;--purple:#9b5cff;--purple2:#6e32cf;--text:#fff;--muted:#b9b2c8}
 *{box-sizing:border-box}
-body{margin:0;background:#100b18;color:white;font-family:Arial,sans-serif}
-header{background:#1c1029;padding:22px;text-align:center;border-bottom:2px solid #a020f0}
-h1{color:#c77dff;font-size:36px;margin:0}
-header p{color:#ddd}
-main{padding:20px}
-input{width:100%;padding:14px;border:1px solid #a020f0;border-radius:10px;background:#21162d;color:white;font-size:16px}
-h2{color:#c77dff}
-.filmes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
-.card{background:#21162d;border-radius:12px;overflow:hidden;text-align:center;padding-bottom:15px}
-.poster{height:145px;background:linear-gradient(135deg,#4b126b,#130d20);display:flex;align-items:center;justify-content:center;font-size:42px}
-.card h3{font-size:16px}
-.card p{font-size:13px;color:#ccc}
-button{background:#9b25db;color:white;border:0;padding:10px 14px;border-radius:8px;font-weight:bold}
-footer{text-align:center;padding:25px;color:#aaa;font-size:13px}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif}
+header{position:sticky;top:0;z-index:5;background:rgba(9,7,15,.96);backdrop-filter:blur(12px);border-bottom:1px solid #2a203a;padding:14px 5%;display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.logo{font-size:1.7rem;font-weight:900;letter-spacing:-1px;color:#fff;text-decoration:none}.logo span{color:var(--purple)}
+nav{display:flex;gap:16px;flex:1;flex-wrap:wrap}nav a{color:#ded7eb;text-decoration:none;font-size:.95rem}nav a:hover{color:var(--purple)}
+.search{background:#20192b;border:1px solid #38284e;color:white;padding:11px 13px;border-radius:22px;max-width:230px;width:100%;outline:none}
+.hero{padding:52px 5% 42px;min-height:330px;display:flex;align-items:center;background:radial-gradient(ellipse at 80% 20%,#51218a 0%,transparent 43%),linear-gradient(110deg,#171020,#0b0812 70%)}
+.hero-content{max-width:650px}.eyebrow{color:#c6a2ff;text-transform:uppercase;letter-spacing:3px;font-size:.76rem;font-weight:bold}
+h1{font-size:clamp(2.2rem,6vw,4rem);margin:12px 0;line-height:1.04}.hero p{color:#d2cada;line-height:1.6;max-width:560px}
+.btn{display:inline-block;border:0;border-radius:9px;padding:12px 17px;font-weight:bold;cursor:pointer;margin:6px 8px 0 0}.primary{background:var(--purple);color:white}.secondary{background:#30243f;color:white;border:1px solid #59416e}
+main{padding:10px 5% 55px}.section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:26px 0 15px}.section-head h2{font-size:1.35rem;margin:0}.section-head small{color:var(--muted)}
+.categories{display:flex;gap:9px;flex-wrap:wrap;margin:12px 0 24px}.chip{background:#1b1525;color:#e8def5;border:1px solid #3b2a50;border-radius:20px;padding:9px 14px;cursor:pointer}.chip.active,.chip:hover{background:var(--purple2);border-color:var(--purple2);color:white}
+.grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px}.card{min-width:0;cursor:pointer}.poster{aspect-ratio:2/3;border-radius:12px;overflow:hidden;display:flex;align-items:flex-end;padding:13px;position:relative;box-shadow:0 7px 22px #0005;transition:transform .2s}.card:hover .poster{transform:translateY(-4px)}.poster:before{content:"▶";position:absolute;top:12px;right:12px;width:32px;height:32px;border-radius:50%;background:#ffffff25;display:grid;place-items:center;font-size:.8rem;border:1px solid #ffffff55}
+.poster strong{font-size:1.1rem;line-height:1.1;text-shadow:0 2px 10px #000;position:relative}.meta{display:flex;justify-content:space-between;gap:6px;color:var(--muted);font-size:.8rem;margin-top:8px}.title{font-weight:bold;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:6px}
+.p1{background:linear-gradient(155deg,#f3a14e,#8a2858 52%,#170d2e)}.p2{background:linear-gradient(150deg,#67c8dc,#234e8e 50%,#11152c)}.p3{background:linear-gradient(150deg,#a5de79,#267052 48%,#10211e)}.p4{background:linear-gradient(145deg,#f4c1d6,#a12c66 52%,#260b28)}.p5{background:linear-gradient(155deg,#b99bff,#4c2c8c 48%,#130d25)}.p6{background:linear-gradient(150deg,#edcf78,#a24a25 50%,#24101b)}.p7{background:linear-gradient(150deg,#7a9fff,#25347a 50%,#0b0d20)}.p8{background:linear-gradient(150deg,#ff896d,#8e203b 50%,#1c091b)}.p9{background:linear-gradient(150deg,#9de4c5,#28766c 50%,#0d2428)}.p10{background:linear-gradient(150deg,#e8a7ff,#7139a6 50%,#180e2d)}
+.empty{display:none;color:var(--muted);padding:30px 0}.notice{margin:30px 0 0;background:#17111f;border:1px solid #30223e;padding:16px;border-radius:12px;color:#c8bfd5;font-size:.9rem;line-height:1.5}
+footer{padding:25px 5%;border-top:1px solid #2a203a;color:#9d94ab;font-size:.85rem}
+.modal{position:fixed;inset:0;background:#000c;display:none;align-items:center;justify-content:center;padding:20px;z-index:10}.modal.open{display:flex}.dialog{width:min(520px,100%);background:#17111f;border:1px solid #48335e;border-radius:16px;padding:22px}.dialog h2{margin-top:0}.close{float:right;background:none;color:white;border:0;font-size:1.5rem;cursor:pointer}.dialog p{color:#c9c0d5;line-height:1.5}
+@media(max-width:900px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}header{gap:12px}.search{max-width:100%;flex:1}}
+@media(max-width:520px){header{padding:12px 4%}.logo{font-size:1.5rem}nav{order:3;flex-basis:100%;gap:14px}nav a{font-size:.85rem}.search{width:135px}.hero{padding:42px 5%;min-height:300px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}main{padding-left:4%;padding-right:4%}.section-head h2{font-size:1.2rem}}
 </style>
 </head>
 <body>
 <header>
-<h1>🎬 CineFlix</h1>
-<p>Seu próximo filme favorito começa aqui!</p>
+  <a class="logo" href="#" aria-label="CineFlix início">Cine<span>Flix</span></a>
+  <nav><a href="#inicio">Início</a><a href="#catalogo">Filmes</a><a href="#catalogo" id="seriesLink">Séries</a><a href="#favoritos" id="favLink">♥ Favoritos</a></nav>
+  <input id="search" class="search" type="search" placeholder="Buscar título..." aria-label="Buscar título">
 </header>
+<section class="hero" id="inicio">
+  <div class="hero-content">
+    <div class="eyebrow">Seu próximo play começa aqui</div>
+    <h1>Histórias incríveis.<br><span style="color:#b78aff">Uma tela só.</span></h1>
+    <p>Descubra filmes e séries por gênero, encontre seus favoritos e prepare a pipoca. Explore nosso catálogo de demonstração.</p>
+    <button class="btn primary" onclick="document.querySelector('#catalogo').scrollIntoView({behavior:'smooth'})">▶ Explorar catálogo</button>
+    <button class="btn secondary" onclick="showInfo()">Sobre o CineFlix</button>
+  </div>
+</section>
 <main>
-<input id="busca" placeholder="🔎 Buscar filmes e séries..." oninput="buscar()">
-<h2>🍿 Em destaque</h2>
-<div class="filmes" id="lista">
-<div class="card"><div class="poster">🚀</div><h3>Aventura Espacial</h3><p>Ficção científica</p><button onclick="info('Aventura Espacial')">Saiba mais</button></div>
-<div class="card"><div class="poster">🦸</div><h3>Heróis do Amanhã</h3><p>Ação e aventura</p><button onclick="info('Heróis do Amanhã')">Saiba mais</button></div>
-<div class="card"><div class="poster">🕵️</div><h3>O Grande Mistério</h3><p>Suspense</p><button onclick="info('O Grande Mistério')">Saiba mais</button></div>
-<div class="card"><div class="poster">🌌</div><h3>Mundos Mágicos</h3><p>Fantasia</p><button onclick="info('Mundos Mágicos')">Saiba mais</button></div>
-</div>
+  <section id="catalogo">
+    <div class="section-head"><h2>Explore o catálogo</h2><small id="count">10 títulos</small></div>
+    <div class="categories" id="categories">
+      <button class="chip active" data-cat="Todos">Todos</button>
+      <button class="chip" data-cat="Ação">Ação</button>
+      <button class="chip" data-cat="Comédia">Comédia</button>
+      <button class="chip" data-cat="Drama">Drama</button>
+      <button class="chip" data-cat="Fantasia">Fantasia</button>
+      <button class="chip" data-cat="Romance">Romance</button>
+      <button class="chip" data-cat="Série">Séries</button>
+    </div>
+    <div class="grid" id="grid"></div>
+    <div class="empty" id="empty">Nenhum título encontrado. Tente outra pesquisa ou categoria.</div>
+  </section>
+  <section id="favoritos">
+    <div class="section-head"><h2>Seus favoritos <span style="color:#b78aff">♥</span></h2><small>Salvos neste aparelho</small></div>
+    <div class="grid" id="favGrid"></div>
+    <div class="empty" id="favEmpty" style="display:block">Toque no coração de um título para adicioná-lo aos favoritos.</div>
+  </section>
+  <div class="notice"><strong>Versão inicial de demonstração:</strong> os títulos e capas estilizadas abaixo são exemplos. Este site ainda não transmite filmes completos. Para incluir vídeos, use conteúdo próprio ou devidamente licenciado e adicione os links de reprodução autorizados.</div>
 </main>
-<footer>© CineFlix — Catálogo demonstrativo</footer>
+<footer>© <span id="year"></span> CineFlix • Projeto de demonstração para celular</footer>
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" onclick="if(event.target===this)closeModal()">
+ <div class="dialog"><button class="close" onclick="closeModal()" aria-label="Fechar">×</button><div class="eyebrow">CineFlix</div><h2 id="modalTitle">Título</h2><p id="modalText"></p><button class="btn primary" id="watchBtn">▶ Assistir demonstração</button><button class="btn secondary" onclick="closeModal()">Fechar</button></div>
+</div>
 <script>
-function buscar(){
-let q=document.getElementById('busca').value.toLowerCase();
-document.querySelectorAll('.card').forEach(c=>{
-c.style.display=c.innerText.toLowerCase().includes(q)?'block':'none';
-});
+const titles=[
+{id:1,name:"Cidade Neon",type:"Filme",cat:"Ação",year:2025,cls:"p1",desc:"Uma equipe improvável precisa salvar a cidade antes que as luzes se apaguem."},
+{id:2,name:"Além do Oceano",type:"Filme",cat:"Drama",year:2024,cls:"p2",desc:"Uma viagem transforma a vida de duas pessoas que buscavam um novo começo."},
+{id:3,name:"Reino Selvagem",type:"Série",cat:"Fantasia",year:2025,cls:"p3",desc:"Em uma floresta encantada, jovens guardiões protegem criaturas extraordinárias."},
+{id:4,name:"Cartas de Verão",type:"Filme",cat:"Romance",year:2023,cls:"p4",desc:"Cartas esquecidas revelam uma história de amor e escolhas inesperadas."},
+{id:5,name:"Mundo Paralelo",type:"Série",cat:"Fantasia",year:2025,cls:"p5",desc:"Uma descoberta abre caminho para universos que ninguém imaginava existir."},
+{id:6,name:"Missão Impossível? Não!",type:"Filme",cat:"Comédia",year:2024,cls:"p6",desc:"Um grupo de amigos tenta resolver um pequeno problema que vira uma grande confusão."},
+{id:7,name:"Última Órbita",type:"Filme",cat:"Ação",year:2025,cls:"p7",desc:"Uma tripulação tem pouco tempo para encontrar o caminho de volta para casa."},
+{id:8,name:"Segredos da Noite",type:"Série",cat:"Drama",year:2024,cls:"p8",desc:"Em uma pequena cidade, cada episódio revela uma nova peça de um mistério."},
+{id:9,name:"Ritmo de Verão",type:"Série",cat:"Comédia",year:2023,cls:"p9",desc:"Amigos, música e situações inesperadas durante as férias."},
+{id:10,name:"O Jardim das Estrelas",type:"Filme",cat:"Fantasia",year:2025,cls:"p10",desc:"Uma jovem encontra um jardim onde cada estrela guarda uma memória."}
+];
+let category="Todos",query="",favorites=JSON.parse(localStorage.getItem("cineflix-favs")||"[]"),showFavoritesOnly=false,current=null;
+const grid=document.getElementById("grid");
+function card(t){const fav=favorites.includes(t.id);return `<article class="card" tabindex="0" onclick="openTitle(${t.id})" onkeydown="if(event.key==='Enter')openTitle(${t.id})"><div class="poster ${t.cls}"><strong>${t.name}</strong></div><div class="title">${t.name}</div><div class="meta"><span>${t.type} • ${t.year}</span><span>${fav?"♥":"♡"}</span></div></article>`}
+function render(){
+ const filtered=titles.filter(t=>(category==="Todos"||t.cat===category||(category==="Série"&&t.type==="Série"))&&t.name.toLowerCase().includes(query.toLowerCase()));
+ grid.innerHTML=filtered.map(card).join("");document.getElementById("count").textContent=filtered.length+" títulos";document.getElementById("empty").style.display=filtered.length?"none":"block";
+ const fs=titles.filter(t=>favorites.includes(t.id));document.getElementById("favGrid").innerHTML=fs.map(card).join("");document.getElementById("favEmpty").style.display=fs.length?"none":"block";
+ document.querySelectorAll(".chip").forEach(b=>b.classList.toggle("active",b.dataset.cat===category));
 }
-function info(nome){
-alert(nome+' — título demonstrativo. Os vídeos ainda não estão disponíveis.');
-}
+function openTitle(id){current=titles.find(t=>t.id===id);document.getElementById("modalTitle").textContent=current.name;document.getElementById("modalText").textContent=current.desc+" Categoria: "+current.cat+". Ano: "+current.year+". Este título é fictício e serve para demonstrar o catálogo.";document.getElementById("watchBtn").textContent=favorites.includes(id)?"♥ Remover dos favoritos":"♡ Adicionar aos favoritos";document.getElementById("watchBtn").onclick=()=>{favorites=favorites.includes(id)?favorites.filter(x=>x!==id):[...favorites,id];localStorage.setItem("cineflix-favs",JSON.stringify(favorites));render();openTitle(id)};document.getElementById("modal").classList.add("open")}
+function closeModal(){document.getElementById("modal").classList.remove("open")}
+function showInfo(){document.getElementById("modalTitle").textContent="Bem-vindo ao CineFlix";document.getElementById("modalText").textContent="Este é o protótipo inicial do seu site de filmes e séries. Os títulos são exemplos fictícios. Para transmitir vídeos, conecte conteúdo próprio ou autorizado.";document.getElementById("watchBtn").style.display="none";document.getElementById("modal").classList.add("open");}
+document.getElementById("search").addEventListener("input",e=>{query=e.target.value;render()});
+document.querySelectorAll(".chip").forEach(b=>b.addEventListener("click",()=>{category=b.dataset.cat;render()}));
+document.getElementById("favLink").addEventListener("click",()=>setTimeout(()=>document.getElementById("favoritos").scrollIntoView({behavior:"smooth"}),0));
+document.getElementById("seriesLink").addEventListener("click",()=>{category="Série";render()});
+document.getElementById("year").textContent=new Date().getFullYear();
+document.querySelector(".close").addEventListener("click",()=>document.getElementById("watchBtn").style.display="inline-block");
+render();
 </script>
 </body>
 </html>
-
